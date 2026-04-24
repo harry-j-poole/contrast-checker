@@ -56,7 +56,7 @@ function isValidHex(h) {
 }
 
 // ── State ─────────────────────────────────────────────────────
-let fg = '#e0ddf9', bg = '#5746dd', surface = '#fbfbfe'
+let fg = '#F5FAF5', bg = '#3F8348', surface = '#F9F9F1'
 // Reference hue & saturation stored separately so they survive the slider
 // hitting 0% (black) or 100% (white), where HSL loses hue information
 let fgH = 0, fgS = 0
