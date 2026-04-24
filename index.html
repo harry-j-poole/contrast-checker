@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colour Contrast Checker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <div class="page-header">
+      <div class="page-header-inner">
+        <div class="header-left">
+          <h1>Colour Contrast Checker</h1>
+          <p>
+            Evaluate foreground and background colour combinations against WCAG 2.2 accessibility standards.<br>
+            Designed &amp; Developed by <a href="https://harrypoole.co.uk/" class="header-link">Harry Poole</a>
+          </p>
+        </div>
+        <!--<div class="header-right">
+          -<span class="toggle-label">Enable Design.md</span>
+          <label class="toggle-switch" aria-label="Enable Design.md">
+            <input type="checkbox" id="design-md-toggle" />
+            <span class="toggle-track"></span>
+          </label>
+        </div>-->
+      </div>
+    </div>
+
+    <main>
+
+      <!-- Colour inputs + preview -->
+      <div class="card">
+        <div class="card-body">
+          <div class="inputs-row">
+
+            <div class="color-field">
+              <label for="bg-hex">Primary</label>
+              <div class="color-input-wrap">
+                <input type="color" id="bg-picker" value="#5746dd" aria-label="Background colour picker" />
+                <input type="text"  id="bg-hex"    value="#5746DD" maxlength="7" spellcheck="false"
+                       class="hex-input" placeholder="#ffffff" aria-label="Background hex value" />
+              </div>
+              <div class="lightness-wrap">
+                <svg class="l-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 1a6 6 0 0 0 0 12A6 6 0 0 1 7 1z" fill="currentColor"/>
+                </svg>
+                <input type="range" class="lightness-slider" id="bg-lightness"
+                       min="0" max="100" value="50"
+                       aria-label="Background colour lightness" />
+                <svg class="l-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
+                  <path d="M7 1v2M7 11v2M1 7h2M11 7h2M3.05 3.05l1.42 1.42M9.53 9.53l1.42 1.42M9.53 4.47l1.42-1.42M3.05 10.95l1.42-1.42"
+                        stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="color-field">
+              <label for="fg-hex">Secondary</label>
+              <div class="color-input-wrap">
+                <input type="color" id="fg-picker" value="#e0ddf9" aria-label="Foreground colour picker" />
+                <input type="text"  id="fg-hex"    value="#E0DDF9" maxlength="7" spellcheck="false"
+                       class="hex-input" placeholder="#000000" aria-label="Foreground hex value" />
+              </div>
+              <div class="lightness-wrap">
+                <svg class="l-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 1a6 6 0 0 0 0 12A6 6 0 0 1 7 1z" fill="currentColor"/>
+                </svg>
+                <input type="range" class="lightness-slider" id="fg-lightness"
+                       min="0" max="100" value="50"
+                       aria-label="Foreground colour lightness" />
+                <svg class="l-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
+                  <path d="M7 1v2M7 11v2M1 7h2M11 7h2M3.05 3.05l1.42 1.42M9.53 9.53l1.42 1.42M9.53 4.47l1.42-1.42M3.05 10.95l1.42-1.42"
+                        stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="color-field">
+              <label for="surface-hex">Surface</label>
+              <div class="color-input-wrap">
+                <input type="color" id="surface-picker" value="#fbfbfe" aria-label="Surface colour picker" />
+                <input type="text"  id="surface-hex"    value="#FBFBFE" maxlength="7" spellcheck="false"
+                       class="hex-input" placeholder="#ffffff" aria-label="Surface hex value" />
+              </div>
+              <div class="lightness-wrap">
+                <svg class="l-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 1a6 6 0 0 0 0 12A6 6 0 0 1 7 1z" fill="currentColor"/>
+                </svg>
+                <input type="range" class="lightness-slider" id="surface-lightness"
+                       min="0" max="100" value="50"
+                       aria-label="Surface colour lightness" />
+                <svg class="l-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
+                  <path d="M7 1v2M7 11v2M1 7h2M11 7h2M3.05 3.05l1.42 1.42M9.53 9.53l1.42 1.42M9.53 4.47l1.42-1.42M3.05 10.95l1.42-1.42"
+                        stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-body">
+
+          <!-- Pair 1: Content vs Background -->
+          <p class="ratio-pair-label">Secondary / Background</p>
+          <div class="ratio-row">
+            <div>
+              <p class="ratio-label">Contrast Ratio</p>
+              <p class="ratio-value" id="ratio-display">—</p>
+            </div>
+            <div class="level-badges">
+              <div class="level-card">
+                <p class="level-title">WCAG AA</p>
+                <span class="badge badge-pass" id="badge-aa">&#10003; Pass</span>
+              </div>
+              <div class="level-card">
+                <p class="level-title">WCAG AAA</p>
+                <span class="badge badge-pass" id="badge-aaa">&#10003; Pass</span>
+              </div>
+            </div>
+          </div>
+          <div class="scale-wrap">
+            <div class="scale-bar" role="img" aria-label="Content vs Background contrast scale">
+              <div class="scale-zone zone-fail"></div>
+              <div class="scale-zone zone-warn"></div>
+              <div class="scale-zone zone-aa"></div>
+              <div class="scale-zone zone-aaa"></div>
+              <div class="scale-dot" id="scale-dot"></div>
+            </div>
+            <div class="scale-labels">
+              <span>1:1</span><span>3:1</span><span>4.5:1</span><span>7:1</span><span>21:1</span>
+            </div>
+          </div>
+
+          <div class="ratio-divider"></div>
+
+          <!-- Pair 2: Surface vs Background -->
+          <p class="ratio-pair-label">Primary / Surface</p>
+          <div class="ratio-row">
+            <div>
+              <p class="ratio-label">Contrast Ratio</p>
+              <p class="ratio-value" id="ratio-display-surface">—</p>
+            </div>
+            <div class="level-badges">
+              <div class="level-card">
+                <p class="level-title">WCAG AA</p>
+                <span class="badge badge-pass" id="badge-aa-surface">&#10003; Pass</span>
+              </div>
+              <div class="level-card">
+                <p class="level-title">WCAG AAA</p>
+                <span class="badge badge-pass" id="badge-aaa-surface">&#10003; Pass</span>
+              </div>
+            </div>
+          </div>
+          <div class="scale-wrap">
+            <div class="scale-bar" role="img" aria-label="Surface vs Background contrast scale">
+              <div class="scale-zone zone-fail"></div>
+              <div class="scale-zone zone-warn"></div>
+              <div class="scale-zone zone-aa"></div>
+              <div class="scale-zone zone-aaa"></div>
+              <div class="scale-dot" id="scale-dot-surface"></div>
+            </div>
+            <div class="scale-labels">
+              <span>1:1</span><span>3:1</span><span>4.5:1</span><span>7:1</span><span>21:1</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="card">
+
+        <!-- Top: chosen bg + fg colours applied to text -->
+        <div class="preview-text-section" id="preview-text">
+          <p class="preview-large">This is your Large Text example. Large text is defined as at least 18pt (24px) regular weight, or 14pt (approximately 18.67px) bold.</p>
+          <p class="preview-normal">This is your Normal text example — This is defined as anythibng under 18pt (24px) or under 14pt bold (18.67px)</p>
+        </div>
+
+        <!-- Bottom: white background, elements styled with chosen foreground colour -->
+        <div class="preview-ui-section" id="preview-ui">
+          <div class="preview-field">
+            <label class="preview-label" for="prev-input">Example input field</label>
+            <input type="text" id="prev-input" class="preview-input" placeholder="Enter text..." />
+          </div>
+          <label class="preview-check-label">
+            <input type="checkbox" class="preview-checkbox" checked />
+            Example checkbox
+          </label>
+          <div class="preview-field">
+            <label class="preview-label" for="prev-input">To learn more in detail about your colour selections, view the</label>
+          </div>
+          <a href="#wcag-detail"><button class="preview-btn-primary">Find out more</button></a>
+        </div>
+
+      </div>
+
+      <!-- WCAG 2.2 compliance table -->
+      <div class="card" id="wcag-detail">
+        <div class="table-header">
+          <h2>WCAG 2.2 Compliance Detail</h2>
+          <p>Success Criteria 1.4.3 (Contrast Minimum, AA) and 1.4.6 (Contrast Enhanced, AAA)</p>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th rowspan="2">Criterion</th>
+                <th rowspan="2">Required ratio</th>
+                <th colspan="2" class="center group-head">Primary / Secondary</th>
+                <th colspan="2" class="center group-head">Primary / Surface</th>
+              </tr>
+              <tr>
+                <th class="center">AA</th>
+                <th class="center">AAA</th>
+                <th class="center">AA</th>
+                <th class="center">AAA</th>
+              </tr>
+            </thead>
+            <tbody id="criteria-body">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <strong>Large text</strong> is defined as at least 18pt (24px) regular weight, or 14pt
+          (approximately 18.67px) bold. <strong>UI Components</strong> covers graphical objects and
+          user interface component states (WCAG 1.4.11, Level AA only).
+        </div>
+      </div>
+
+    </main>
+
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <script src="script.js" defer></script>
+
+  </body>
+</html>
